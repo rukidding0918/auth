@@ -18,8 +18,8 @@ const validator = {
       if (rows.length > 0) {
         res.json({ message: 'email already exists' }); return
       }
-      next()
     })
+    next()
   },
 
   checkPassword: (req, res, next) => {
