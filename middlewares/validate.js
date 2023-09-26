@@ -5,10 +5,10 @@ const validator = {
     let body = req.body
     for (const key in body) {
       if (body[key] === '') {
-        res.json({ message: 'empty inputs' }); return
+        return res.json({ message: 'empty inputs' })
       }
     }
-    next()
+    return next()
   },
 
   checkUniqueEmail: (req, res, next) => {
@@ -16,10 +16,10 @@ const validator = {
     const sql = 'select * from user where email = ?'
     conn.query(sql, [email], (err, rows) => {
       if (rows.length > 0) {
-        res.json({ message: 'email already exists' }); return
+        return res.json({ message: 'email already exists' })
       }
     })
-    next()
+    return next()
   },
 
   checkPassword: (req, res, next) => {
@@ -27,15 +27,15 @@ const validator = {
     const lowercaseRegex = /[a-z]/;
     const numberRegex = /[0-9]/;
     if (password.length < 8) {
-      res.json({ message: 'Please make sure your password is at least 8 characters long.' }); return
+      return res.json({ message: 'Please make sure your password is at least 8 characters long.' })
     }
     if (!lowercaseRegex.test(password)) {
-      res.json({ message: 'Please enter lowercase letters in your password' }); return
+      return res.json({ message: 'Please enter lowercase letters in your password' })
     }
     if (!numberRegex.test(password)) {
-      res.json({ message: 'Please enter a number in your password' }); return
+      return res.json({ message: 'Please enter a number in your password' })
     }
-    next()
+    return next()
   }
 }
 

@@ -40,20 +40,17 @@ router.get('/signup', (req, res) => {
 })
 
 // [POST] /auth/signup
-router.post('/signup', validator.checkEmpty, validator.checkUniqueEmail, validator.checkPassword)
+router.post('/signup', validator.checkEmpty, validator.checkPassword, validator.checkUniqueEmail)
 router.post('/signup', (req, res) => {
   let name = req.body.name
   let email = req.body.email
   let password = sha(req.body.password + process.env.SALT)
-  console.log(name, email, password)
   const sql = 'insert into user (name, email, password) values (?, ?, ?)'
   conn.query(sql, [name, email, password]), (err, result) => {
     if (err) throw err;
-    console.log(result)
-    console.log(result, 'signed up!')
+    req.session.user = email
+    res.json({ message: 'signed up!' });
   }
-  req.session.user = email
-  res.json({ message: 'signed up!' });
 })
 
 module.exports = router
