@@ -1,0 +1,14 @@
+# secrests
+.env*
+
+# node
+node_modules/
+
+# playwright tests
+tests/
+test-results/
+playwright-report/
+playwright/.cache/
+tests-examples/
+coverage/
+playwright.config.js
